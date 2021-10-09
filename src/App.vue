@@ -1,28 +1,61 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <Header v-on:add-user="addUser" />
+    <!-- <AddUser v-on:add-user="addUser" /> -->
+    <UserList v-on:delete-user="deleteUser" v-bind:users="users" />
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import AddUser from './components/AddUser.vue';
+import Header from "./components/Header.vue";
+import UserList from "./components/UserList.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
-</script>
+    Header,
+    UserList,
+    // AddUser,
+  },
+  data() {
+    return {
+      users: [
+        {
+          id: Math.random(),
+          firstName: "Jason",
+          lastName: "Momoa",
+          email: "json@gmail.com",
+        },
+        {
+          id: Math.random(),
+          firstName: "Johnny",
+          lastName: "Depp",
+          email: "jhonny@gmail.com",
+        },
+        {
+          id: Math.random(),
+          firstName: "Steve",
+          lastName: "Harvey",
+          email: "steve@gmail.com",
+        },
+        {
+          id: Math.random(),
+          firstName: "Taylor",
+          lastName: "Swift",
+          email: "taylor@gmail.com",
+        },
+      ],
+    };
+  },
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  methods: {
+    addUser(newUser) {
+      this.users = [...this.users, newUser];
+    },
+    deleteUser(id) {
+      this.users = this.users.filter((user) => user.id !== id);
+    },
+  },
+};
+</script>
