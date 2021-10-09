@@ -17,14 +17,26 @@
     </v-list-item>
 
     <v-card-actions>
-      <v-btn outlined rounded text @click="$emit('delete-user', user.id)" color="error"> Delete </v-btn>
-      <v-btn outlined rounded text color="primary"> Edit </v-btn>
+      <v-btn
+        outlined
+        rounded
+        text
+        @click="$emit('delete-user', user.id)"
+        color="error"
+      >
+        Delete
+      </v-btn>
+      <!-- <EditUser v-on:edit-user="$emit('edit-user', setUser)" v-bind:user="user" /> -->
+      <AddUser v-bind:user="user" v-bind:isEdit="true" />
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import AddUser from "./AddUser.vue";
+// import EditUser from './EditUser.vue';
 export default {
+  components: { AddUser },
   name: "UserCard",
   props: ["user"],
 

@@ -2,13 +2,13 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          {{ title }}
+        <v-btn outlined rounded text color="primary" v-bind="attrs" v-on="on">
+          Edit
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">{{ title }}</span>
+          <span class="text-h5">Edit User</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -37,14 +37,13 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="action"> Save </v-btn>
+          <v-btn color="blue darken-1" text @click="editUser"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -53,41 +52,33 @@
 
 <script>
 export default {
-  name: "AddUser",
-  props: ["user", "isEdit"],
+  name: "EditUser",
+  props: ["user"],
   data() {
     return {
-      title: this.isEdit ? "Edit User" : "Add User",
       dialog: false,
-      id: this.isEdit ? this.user.id : Math.random(),
-      firstName: this.isEdit ? this.user.lastName : "",
-      lastName: this.isEdit ? this.user.firstName : "",
-      email: this.isEdit ? this.user.email : "",
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      email: this.user.email,
     };
   },
 
-  methods: {
-    action() {
-      const newUser = {
-        id: this.id,
+   methods: {
+    editUser() {
+      const setUser = {
+        id: this.user.id,
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
       };
       // Send up to parent
-      this.isEdit
-        ? this.$emit("edit-user", this.user.id, newUser)
-        : this.$emit("add-user", newUser);
+      this.$emit("edit-user", setUser);
 
-      this.id = "";
       this.firstName = "";
       this.lastName = "";
       this.email = "";
-      this.dialog = false;
+      this.dialog = false
     },
   },
-  computed:{
-
-  }
 };
 </script>

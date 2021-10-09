@@ -5,6 +5,7 @@
         <div v-bind:key="user.id" v-for="user in users">
           <UserCard
             v-on:delete-user="$emit('delete-user', user.id)"
+            v-on:edit-user="$emit('edit-user', setUser)"
             v-bind:user="user"
           />
         </div>
@@ -21,6 +22,5 @@ export default {
 
   props: ["users"],
 
-  data: () => ({}),
 };
 </script>
